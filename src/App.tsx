@@ -1,11 +1,16 @@
+import { Route, Routes } from "react-router-dom";
 import "./App.css";
+import Home from "./pages/Home";
+import Login from "./auth/login";
 
-function App() {
+
+const App: React.FC = () => {
   //const [count, setCount] = useState(0)
   return (
-    <>
-      <div className="bg-black text-green-500">Welcome to our front-end </div>
-    </>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/login" element={<Login />} />
+    </Routes>
   );
 }
 
