@@ -1,14 +1,36 @@
 import React from "react";
 import axios from "axios";
 import { useState } from "react";
+import { useShopContext } from "../context";
+import { useNavigate } from "react-router-dom";
 function Login() {
+  const navigate = useNavigate();
+  interface LoginResponse {
+    token: string;
+    user: {
+      id: string;
+      email: string;
+      name: string;
+      role: string;
+    };
+  }
+  const context = useShopContext();
+  const backendUrl = context?.backendUrl || "";
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const submit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     try {
-      e.preventDefault();
-      console.log(password);
-      console.log(email);
+      const response = await axios.post<LoginResponse>(
+        `${backendUrl}/api/auth/login`,
+        {
+          email,
+          password,
+        }
+      );
+      if (response.status === 200) {
+        navigate("/");
+      }
     } catch (error) {}
   };
   return (
@@ -44,6 +66,7 @@ function Login() {
             <input
               onChange={(e) => setPassword(e.target.value)}
               type="password"
+              value={password}
               placeholder="Enter your password"
               required
               className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 text-sm"
