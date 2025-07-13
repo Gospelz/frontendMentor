@@ -10,7 +10,7 @@ function Login() {
     user: {
       id: string;
       email: string;
-      name: string;
+      name?: string;
       role: string;
     };
   }
@@ -18,8 +18,14 @@ function Login() {
   const backendUrl = context?.backendUrl || "";
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [isloading, setIsLoading] = useState<boolean>(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [error, setError] = useState<string>("");
   const submit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsLoading(true);
+    setError("");
     try {
       const response = await axios.post<LoginResponse>(
         `${backendUrl}/api/auth/login`,
@@ -31,7 +37,11 @@ function Login() {
       if (response.status === 200) {
         navigate("/");
       }
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
   };
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
