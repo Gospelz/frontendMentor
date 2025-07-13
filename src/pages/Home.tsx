@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import React from "react";
 import mentor from "../assets/two-handsome-dark-skinned-executives-having-thoughtful-serious-facial-expression.jpg";
 
