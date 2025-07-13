@@ -18,14 +18,8 @@ function Login() {
   const backendUrl = context?.backendUrl || "";
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [isloading, setIsLoading] = useState<boolean>(false);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [error, setError] = useState<string>("");
   const submit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setIsLoading(true);
-    setError("");
     try {
       const response = await axios.post<LoginResponse>(
         `${backendUrl}/api/auth/login`,
@@ -39,8 +33,6 @@ function Login() {
       }
     } catch (error) {
       console.log(error);
-    } finally {
-      setIsLoading(false);
     }
   };
   return (
