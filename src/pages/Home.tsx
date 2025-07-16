@@ -1,7 +1,15 @@
-
+import { useNavigate } from "react-router-dom";
 import mentor from "../assets/two-handsome-dark-skinned-executives-having-thoughtful-serious-facial-expression.jpg";
 
 function Home() {
+  const navigate = useNavigate();
+  const isLoggedIn = Boolean(localStorage.getItem("token"));
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/login");
+  };
+
   return (
     <>
       <div
@@ -13,18 +21,37 @@ function Home() {
         <header className="relative z-10 bg-gray-900 bg-opacity-80 flex items-center justify-between px-6 py-4">
           <h3 className="text-white font-semibold text-2xl">Mentorship</h3>
           <nav>
-            <a
-              href="/login"
-              className="bg-blue-500 text-white px-4 py-2 rounded mr-2 hover:bg-blue-600 transition"
-            >
-              Login
-            </a>
-            <a
-              href="/admin-login"
-              className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition"
-            >
-              Login as Admin
-            </a>
+            {isLoggedIn ? (
+              <>
+                <button
+                  onClick={handleLogout}
+                  className="bg-red-500 text-white px-4 py-2 rounded mr-2 hover:bg-red-600 transition"
+                >
+                  Logout
+                </button>
+                <a
+                  href="/profile"
+                  className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
+                >
+                  Profile
+                </a>
+              </>
+            ) : (
+              <>
+                <a
+                  href="/login"
+                  className="bg-blue-500 text-white px-4 py-2 rounded mr-2 hover:bg-blue-600 transition"
+                >
+                  Login
+                </a>
+                <a
+                  href="/admin-login"
+                  className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition"
+                >
+                  Login as Admin
+                </a>
+              </>
+            )}
           </nav>
         </header>
         <h1 className="text-white font-thin text-6xl z-10 relative text-center mt-20">
